@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.1 - 2026-11-08
+
+### Changed
+- Settings has a dark look: a black title bar on Windows 11, a black background with white text, and dark rounded buttons.
+- The slider is a plain line with no tick marks, and its thumb is symmetric.
+- No change in size or memory: the exe is still 17.9 KB. The dark-mode libraries load only while Settings is open, so memory in the tray is unchanged.
+
 ## 1.1.0 - 2026-11-08
 
 Rewritten in plain C for a much smaller footprint, with the same look and settings.

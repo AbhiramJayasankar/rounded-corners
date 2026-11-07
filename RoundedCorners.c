@@ -54,6 +54,7 @@ static HWINEVENTHOOK g_hookFg, g_hookTbOrder, g_hookTbMove;
 static DWORD g_explorerPid;
 static WCHAR g_cfgPath[MAX_PATH];
 static HICON g_iconSmall;
+static HMODULE g_uxtheme;   /* held only while Settings is open */
 
 /* ---------------------------------------------------------------- config */
 
@@ -320,6 +321,10 @@ static LRESULT CALLBACK SettingsProc(HWND h, UINT m, WPARAM w, LPARAM l)
             if (LOWORD(w) != TB_THUMBTRACK) SaveRadius(g_radius);
         }
         return 0;
+    case WM_CTLCOLORSTATIC:
+        SetTextColor((HDC)w, RGB(255, 255, 255));
+        SetBkColor((HDC)w, RGB(0, 0, 0));
+        return (LRESULT)GetStockObject(BLACK_BRUSH);
     case WM_COMMAND:
         if (LOWORD(w) == ID_HIDE) DestroyWindow(h);
         else if (LOWORD(w) == ID_EXIT) QuitApp();
@@ -337,6 +342,7 @@ static LRESULT CALLBACK SettingsProc(HWND h, UINT m, WPARAM w, LPARAM l)
         SaveRadius(g_radius);
         g_settings = g_label = g_track = g_btnHide = g_btnExit = NULL;
         if (g_font) { DeleteObject(g_font); g_font = NULL; }
+        if (g_uxtheme) { FreeLibrary(g_uxtheme); g_uxtheme = NULL; }
         PostMessageW(g_main, WM_NULL, 0, 0);
         TrimMemory();
         return 0;
@@ -361,14 +367,37 @@ static void ShowSettings(void)
                                  NULL, NULL, g_inst, NULL);
     if (!g_settings) return;
     g_label = CreateWindowExW(0, L"STATIC", L"", WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, g_settings, NULL, g_inst, NULL);
-    g_track = CreateWindowExW(0, TRACKBAR_CLASSW, L"", WS_CHILD | WS_VISIBLE | WS_TABSTOP | TBS_HORZ | TBS_AUTOTICKS,
+    g_track = CreateWindowExW(0, TRACKBAR_CLASSW, L"", WS_CHILD | WS_VISIBLE | WS_TABSTOP | TBS_HORZ | TBS_NOTICKS | TBS_BOTH,
                               0, 0, 0, 0, g_settings, (HMENU)ID_TRACK, g_inst, NULL);
     g_btnHide = CreateWindowExW(0, L"BUTTON", L"Hide to tray", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_DEFPUSHBUTTON,
                                 0, 0, 0, 0, g_settings, (HMENU)ID_HIDE, g_inst, NULL);
     g_btnExit = CreateWindowExW(0, L"BUTTON", L"Exit", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON,
                                 0, 0, 0, 0, g_settings, (HMENU)ID_EXIT, g_inst, NULL);
+    {   /* Dark title bar (black caption on Windows 11) and dark buttons. The DLLs are
+           loaded only while Settings is open, so the tray-only footprint stays the same. */
+        typedef HRESULT (WINAPI *DwmSetAttr)(HWND, DWORD, LPCVOID, DWORD);
+        typedef HRESULT (WINAPI *SetTheme)(HWND, LPCWSTR, LPCWSTR);
+        HMODULE dwm = LoadLibraryW(L"dwmapi.dll");
+        if (dwm) {
+            DwmSetAttr set = (DwmSetAttr)(void *)GetProcAddress(dwm, "DwmSetWindowAttribute");
+            BOOL dark = TRUE;
+            COLORREF black = 0;
+            if (set) {
+                set(g_settings, 20 /* DWMWA_USE_IMMERSIVE_DARK_MODE */, &dark, sizeof dark);
+                set(g_settings, 35 /* DWMWA_CAPTION_COLOR */, &black, sizeof black);
+            }
+            FreeLibrary(dwm);
+        }
+        g_uxtheme = LoadLibraryW(L"uxtheme.dll");
+        if (g_uxtheme) {
+            SetTheme theme = (SetTheme)(void *)GetProcAddress(g_uxtheme, "SetWindowTheme");
+            if (theme) {
+                theme(g_btnHide, L"DarkMode_Explorer", NULL);
+                theme(g_btnExit, L"DarkMode_Explorer", NULL);
+            }
+        }
+    }
     SendMessageW(g_track, TBM_SETRANGE, FALSE, MAKELPARAM(0, MAX_RADIUS));
-    SendMessageW(g_track, TBM_SETTICFREQ, 10, 0);
     SendMessageW(g_track, TBM_SETPAGESIZE, 0, 5);
     SendMessageW(g_track, TBM_SETPOS, TRUE, g_radius);
     UpdateLabel();
@@ -473,7 +502,7 @@ static int Run(void)
 
     wc.lpfnWndProc = SettingsProc;
     wc.lpszClassName = SET_CLASS;
-    wc.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
+    wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
     RegisterClassExW(&wc);
 
     /* hidden top-level window: owns the tray icon and gets WM_DISPLAYCHANGE */

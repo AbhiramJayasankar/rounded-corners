@@ -29,7 +29,7 @@ It's a single 18 KB program written in plain C against the Win32 API. There's no
 - **Always on top**, including over an auto-hiding taskbar when it slides in.
 - **Every monitor.** It redraws the corners when you plug in a display, change resolution or change scaling. Per-monitor DPI aware.
 - **Adjustable radius** from 0 to 120 px with a slider (default 24 px), remembered between runs.
-- **Lives in the tray.** Double-click the tray icon for Settings, or right-click it for Settings and Exit.
+- **Lives in the tray.** Double-click the tray icon for the dark Settings window, or right-click it for Settings and Exit.
 
 ## Antialiasing up close
 
@@ -58,6 +58,9 @@ Version 1.0 was a C# WinForms app that checked the corners four times a second. 
 
 1. Download `RoundedCorners.exe` from the [latest release](https://github.com/AbhiramJayasankar/rounded-corners/releases/latest).
 2. Run it. Choose a radius in the window that opens, then close the window or click **Hide to tray**.
+
+   <img src="docs/settings.png" alt="Rounded Corners settings window: dark window with a corner radius slider, Hide to tray and Exit buttons" width="420">
+
 3. To start it with Windows, press <kbd>Win</kbd> + <kbd>R</kbd>, type `shell:startup`, and put a shortcut to `RoundedCorners.exe` in that folder.
 
 Opening the program again while it's running brings up the existing Settings window. It doesn't start a second copy. Your radius is saved in `%APPDATA%\RoundedCorners.cfg`.
