@@ -18,7 +18,7 @@ function cornerAlpha(r) {
 // Dawn wallpaper colour at a point (0..1, 0..1), matching the CSS gradient.
 function dawn(u, v) {
   const t = Math.min(1, Math.max(0, (u + v) / 2));
-  const stops = [[0, [106, 68, 224]], [0.55, [16, 179, 163]], [1, [255, 148, 102]]];
+  const stops = [[0, [92, 52, 20]], [0.55, [200, 134, 42]], [1, [246, 212, 138]]];
   for (let i = 1; i < stops.length; i++) if (t <= stops[i][0]) {
     const [t0, c0] = stops[i - 1], [t1, c1] = stops[i], k = (t - t0) / (t1 - t0);
     return c0.map((c, j) => Math.round(c + (c1[j] - c) * k));

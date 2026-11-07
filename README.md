@@ -1,24 +1,24 @@
 <p align="center">
-  <img src="docs/hero.png" alt="Rounded Corners for Windows: smooth black antialiased rounded screen corners, 30 KB, 2 MB of memory, 0% CPU when idle" width="100%">
+  <img src="docs/hero.png" alt="Rounded Corners for Windows: smooth black antialiased rounded screen corners, 18 KB, 2 MB of memory, 0% CPU when idle" width="100%">
 </p>
 
 <h1 align="center">Rounded Corners for Windows</h1>
 
 <p align="center">
   <b>Round the corners of your screen on Windows 11 and Windows 10.</b><br>
-  Smooth, antialiased black corners for OLED and every other display. 30 KB, 2 MB of memory, no CPU when idle.
+  Smooth, antialiased black corners for OLED and every other display. 18 KB, 2 MB of memory, no CPU when idle.
 </p>
 
 <p align="center">
-  <a href="https://github.com/AbhiramJayasankar/rounded-corners/releases/latest"><img alt="Download the latest release" src="https://img.shields.io/github/v/release/AbhiramJayasankar/rounded-corners?label=download&style=flat-square&color=1F8A8A"></a>
-  <img alt="Windows 10 and 11" src="https://img.shields.io/badge/Windows-10%20%7C%2011-2B2F77?style=flat-square">
-  <img alt="Size 30 KB" src="https://img.shields.io/badge/size-30%20KB-F2C66D?style=flat-square">
+  <a href="https://github.com/AbhiramJayasankar/rounded-corners/releases/latest"><img alt="Download the latest release" src="https://img.shields.io/github/v/release/AbhiramJayasankar/rounded-corners?label=download&style=flat-square&color=C8862A"></a>
+  <img alt="Windows 10 and 11" src="https://img.shields.io/badge/Windows-10%20%7C%2011-5C3414?style=flat-square">
+  <img alt="Size 18 KB" src="https://img.shields.io/badge/size-18%20KB-F6D48A?style=flat-square">
   <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-444?style=flat-square"></a>
 </p>
 
 Rounded Corners draws a small black, antialiased corner over each corner of every monitor, so a sharp rectangular screen looks like a modern phone or laptop display. On an OLED screen the corners are pixels that are switched off, so they look like part of the bezel.
 
-It's a single 30 KB program written in plain C against the Win32 API. There's no installer, no .NET or runtime to install, and nothing running in the background except the corners themselves.
+It's a single 18 KB program written in plain C against the Win32 API. There's no installer, no .NET or runtime to install, and nothing running in the background except the corners themselves.
 
 ## Features
 
@@ -49,7 +49,7 @@ Version 1.0 was a C# WinForms app that checked the corners four times a second. 
 
 | | v1.0 (C# / .NET) | v1.1 (C) |
 |---|---|---|
-| Download | 11.5 KB (needs .NET Framework) | 30 KB, self-contained |
+| Download | 11.5 KB (needs .NET Framework) | 18 KB, self-contained |
 | Memory (private bytes) | 22.8 MB | 2.2 MB |
 | Working set | 36.4 MB | 2.4 MB |
 | CPU time per minute idle | 281 ms | 0 ms |
