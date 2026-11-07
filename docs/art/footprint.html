@@ -1,0 +1,28 @@
+<!doctype html><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Geist:wght@400;500;600&display=block" rel="stylesheet">
+<style>
+html,body{margin:0;width:1280px;height:440px;background:#000;overflow:hidden;font-family:Geist,sans-serif;color:#fff}
+.wrap{position:absolute;left:96px;top:60px;width:1088px}
+h2{font-family:Unbounded,sans-serif;font-size:26px;font-weight:700;letter-spacing:-.5px;margin:0 0 34px}
+.m{font-size:19px;color:#b9c0cc;margin:0 0 12px}
+.row{display:flex;align-items:center;height:34px;margin-bottom:8px;font-size:17px}
+.who{width:170px;color:#8b93a1}
+.bar{height:22px;border-radius:11px}
+.old{background:#3a3f4b}
+.new{background:linear-gradient(90deg,#6A44E0,#10B3A3 55%,#FF9466)}
+.v{margin-left:14px;font-family:Unbounded,sans-serif;font-weight:500;font-size:16px}
+.group{margin-bottom:34px}
+</style>
+<div class="wrap">
+  <h2>Measured on Windows 11, tray icon only, after 60 seconds idle</h2>
+  <div class="group">
+    <div class="m">Memory (private bytes)</div>
+    <div class="row"><span class="who">v1.0, C# / .NET</span><span class="bar old" style="width:750px"></span><span class="v">22.8 MB</span></div>
+    <div class="row"><span class="who">v1.1, plain C</span><span class="bar new" style="width:72px"></span><span class="v">2.2 MB</span></div>
+  </div>
+  <div class="group">
+    <div class="m">CPU time used per minute</div>
+    <div class="row"><span class="who">v1.0, C# / .NET</span><span class="bar old" style="width:750px"></span><span class="v">281 ms</span></div>
+    <div class="row"><span class="who">v1.1, plain C</span><span class="bar new" style="width:4px"></span><span class="v">0 ms</span></div>
+  </div>
+</div>

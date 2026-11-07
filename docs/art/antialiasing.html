@@ -1,0 +1,19 @@
+<!doctype html><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Geist:wght@400;500;600&display=block" rel="stylesheet">
+<style>
+html,body{margin:0;width:1280px;height:600px;background:#000;overflow:hidden;font-family:Geist,sans-serif;color:#fff}
+canvas{position:absolute;top:56px}
+.l{position:absolute;top:500px;width:480px;font-family:Unbounded,sans-serif;font-size:21px;font-weight:700;letter-spacing:-.3px}
+.l span{font-family:Geist,sans-serif;letter-spacing:0}
+.l span{display:block;font-size:17px;font-weight:400;color:#8b93a1;margin-top:6px}
+</style>
+<canvas id="a" width="432" height="432" style="left:120px"></canvas>
+<canvas id="b" width="432" height="432" style="left:728px"></canvas>
+<div class="l" style="left:120px">Without antialiasing<span>Each pixel is either black or not: a staircase.</span></div>
+<div class="l" style="left:728px">Rounded Corners<span>256 samples per pixel give every edge pixel its exact shade.</span></div>
+<script src="corner.js"></script>
+<script>
+const r=24,z=18,al=cornerAlpha(r),bg=(u,v)=>dawn(.55+u*.3,.55+v*.3);
+drawZoom(a.getContext('2d'),0,0,r,z,al.map(row=>row.map(v=>v>=128?255:0)),bg);
+drawZoom(b.getContext('2d'),0,0,r,z,al,bg);
+</script>
